@@ -30,6 +30,9 @@ jobs:
         uses: sonarsource/sonarqube-scan-action@master
         with:
           args: Dsonar.javascript.lcov.reportPaths=/coverage/angular-17-crud/lcov.info
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
       - uses: sonarsource/sonarqube-scan-action@master
         env:
