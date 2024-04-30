@@ -3,35 +3,32 @@ name: Build
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build:
-    name: Build
+    name: Build and Analyze
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
         with:
-          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
-      - name: Setup Node.js
+          fetch-depth: 0
+      - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: "18.13" # Assurez-vous que cette version correspond à celle utilisée dans votre projet
-      - name: Install Dependencies
-        run: npm install --legacy-peer-deps
-      - name: Run Tests and Generate Coverage Report
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests with coverage
         run: npm run test
+
       - uses: sonarsource/sonarqube-scan-action@master
         with:
           args: >
-            -Dsonar.projectKey=tfourties-ynov-frontend
-            -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }}
-            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-            -Dsonar.coverage.exclusions=**/*.spec.ts,**/*.module.ts
+            -Dsonar.coverage.exclusions=**/*.spec.ts
             -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
-      # If you wish to fail your job when the Quality Gate is red, uncomment the
-      # following lines. This would typically be used to fail a deployment.
-      # - uses: sonarsource/sonarqube-quality-gate-action@master
-      #   timeout-minutes: 5
-      #   env:
-      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
