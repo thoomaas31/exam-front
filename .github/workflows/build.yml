@@ -16,11 +16,11 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: "16" # Assurez-vous que cette version correspond à celle utilisée dans votre projet
+          node-version: "18.13" # Assurez-vous que cette version correspond à celle utilisée dans votre projet
       - name: Install Dependencies
-        run: npm install
+        run: npm install --legacy-peer-deps
       - name: Run Tests and Generate Coverage Report
-        run: npm run test # Assurez-vous que votre script de test dans package.json génère un rapport de couverture
+        run: npm run test
       - uses: sonarsource/sonarqube-scan-action@master
         with:
           args: >
