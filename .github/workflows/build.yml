@@ -16,7 +16,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: "20" # Assurez-vous que cette version correspond à celle utilisée dans votre projet
+          node-version: "18.13" # Assurez-vous que cette version correspond à celle utilisée dans votre projet
       - name: Install Dependencies
         run: npm install
       - name: Run Tests and Generate Coverage Report
