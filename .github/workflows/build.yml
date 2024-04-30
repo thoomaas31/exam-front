@@ -26,10 +26,7 @@ jobs:
         continue-on-error: true
 
       - uses: sonarsource/sonarqube-scan-action@master
-        with:
-          args: >
-            -Dsonar.coverage.exclusions=**/*.spec.ts
-            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
